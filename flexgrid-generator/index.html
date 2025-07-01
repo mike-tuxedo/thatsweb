@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Seite mit HTML-Komponenten</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/assets/init-styles.css">
+    <link rel='stylesheet' href='/assets/pico.lime.min.css'>
+    <script src="/assets/int-script.js"></script>
+
+    <script>
+        // Funktion zum Laden der HTML-Komponenten
+        async function loadComponent(url, containerId) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                }
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML += html;
+            } catch (error) {
+                console.error(`Fehler beim Laden von ${url}:`, error);
+                document.getElementById(containerId).innerHTML = `<p>Fehler beim Laden der Komponente: ${url}</p>`;
+            }
+        }
+
+        const contentLoaded = new Event('contentLoaded');
+        // Alle Komponenten laden, wenn die Seite geladen ist
+        document.addEventListener('DOMContentLoaded', async function () {
+            const path = location.pathname !== '/' ? location.pathname : '/index';
+            const contentContainer = document.getElementById('content-container');
+            await loadComponent(`${path}/top-content.html`, 'top-container');
+            // Content verzögert einblenden, damit der Swiper nicht flackert
+            await loadComponent(`${path}/main-content.html`, 'main-container');
+            await loadComponent('/footer-content.html', 'footer-container');
+            document.dispatchEvent(contentLoaded);
+        });
+    </script>
+
+    <!-- Optional SWIPER -->
+    <script src="/assets/swiper-element-bundle.min.js" async></script>
+</head>
+
+<body class="flexgrid-generator">
+    <header id="header-container">
+        <div class="container content-full">
+            <div class="container content-md fg-21">
+                <img src="media/logo.jpg" width="302" height="65" style="max-width: 302px;" alt="Thats web logo"
+                    fetchpriority="high">
+                <nav class="fg-" style="flex-grow: 1; align-items: center; justify-content: flex-end;">
+                    <ul id="navitems-container">
+                        <li class="topnav-link active"><a href="/">Home</a></li>
+<li class="topnav-link"><a href="/templates">Templates</a></li>
+<li class="topnav-link"><a href="/about-me">About me</a></li>
+<li class="topnav-link"><a href="/flex-grid">FlexGrid</a></li>
+<li class="topnav-link"><a href="/flexgrid-generator">FlexGrid generator</a></li>
+<li class="topnav-link">
+    <span tabindex="0">Examples</span>
+    <ul>
+        <li><a href="/examples/playground">Playground</a></li>
+        <li><a href="/examples/example1">Example 1</a></li>
+        <li><a href="/examples/example2">Example 2</a></li>
+    </ul>
+</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main id="content-container">
+        <div id="top-container" class="content-full"></div>
+        <div id="main-container" class="content-md"></div>
+    </main>
+
+    <footer id="footer-container"></footer>
+
+    <link rel="stylesheet" href="/assets/main-styles.css" media="print" onload="this.media='all'">
+    <script src="/assets/main-script.js" async></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlightjs-themes@1.0.0/atelier-cave.dark.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+  <script>
+    function generateCSS() {
+      const prefixVal = document.getElementById("prefix").value;
+      const schemaVals = document.getElementById("schemes").value.split(',').map(s => s.trim()).filter(Boolean);
+      const gapVals = document.getElementById("gaps").value.split(',').map(Number);
+      const minwVals = document.getElementById("minw").value.split(',').map(Number);
+
+      let css = `/* === Base Flex Layout === */\n`;
+      css += `*[class*="${prefixVal}"] { display: flex; justify-content: center; container-type: inline-size; }\n\n`;
+      css += `*[class*="${prefixVal}-"] { flex-wrap: wrap; }\n\n`;
+      css += `*[class*="${prefixVal}-gap"] { gap: var(--gap); }\n\n`;
+      css += `*[class*="${prefixVal}-gap"] > * { --items: 1; --gaps: calc(var(--items) - 1); width: calc(calc(100%/var(--items)) - (var(--gaps)*var(--gap)/var(--items))); max-width: 100%; }\n\n`;
+
+      const containerGroups = {};
+
+      schemaVals.forEach(schema => {
+        const steps = schema.split('').map(Number);
+        const classname = `${prefixVal}-${schema}`;
+        css += `.${classname} > * { --items: ${steps[0]}; }\n`;
+
+        gapVals.forEach(gap => {
+          css += `.${prefixVal}-gap${gap} { --gap: ${gap}px; }\n`;
+          minwVals.forEach(minw => {
+            css += `.${prefixVal}-min${minw} > * { min-width: ${minw}px; }\n`;
+
+            for (let i = 1; i < steps.length; i++) {
+              const prevItems = steps[i - 1];
+              const currentItems = steps[i];
+              const maxInlineSize = (prevItems * minw) + (prevItems - 1) * gap - 1;
+              const selector = `.${classname}.${prefixVal}-gap${gap}.${prefixVal}-min${minw} > *`;
+
+              if (!containerGroups[maxInlineSize]) containerGroups[maxInlineSize] = [];
+              containerGroups[maxInlineSize].push({ selector, items: currentItems });
+            }
+          });
+        });
+      });
+
+      const sortedSizes = Object.keys(containerGroups).map(Number).sort((a, b) => b - a);
+
+      css += `\n/* === Container Queries === */\n`;
+      sortedSizes.forEach(size => {
+        css += `@container (max-inline-size: ${size}px) {\n`;
+        containerGroups[size].forEach(({ selector, items }) => {
+          css += `  ${selector} { --items: ${items}; }\n`;
+        });
+        css += `}\n\n`;
+      });
+
+      document.getElementById("output").value = css;
+      document.getElementById("highlighted").textContent = css;
+      hljs.highlightElement(document.getElementById("highlighted"));
+      minifyEdited();
+    }
+
+    function minifyEdited() {
+      const raw = document.getElementById("output").value;
+      const minified = raw.replace(/\s*{\s*/g, '{').replace(/;\s*/g, ';').replace(/}\s*/g, '}').replace(/\n/g, '').replace(/\s{2,}/g, ' ').trim();
+      document.getElementById("minified").value = minified;
+    }
+
+    function copyToClipboard(id) {
+      const element = document.getElementById(id);
+      element.select();
+      document.execCommand("copy");
+      alert("Copied!");
+    }
+  
+    document.addEventListener('contentLoaded', () => {
+      const cssEditableBox = document.getElementById("output");
+      const cssPreview = document.getElementById("highlighted");
+      cssEditableBox.addEventListener('keyup', () => {
+        document.getElementById("highlighted").textContent = cssEditableBox.value;
+        cssPreview.removeAttribute('data-highlighted');
+        hljs.highlightElement(cssPreview);
+      })
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+div[role="group"] {
+    --pico-spacing: 5px;
+}
+button {
+    --pico-form-element-spacing-vertical: 0.25rem;
+    --pico-form-element-spacing-horizontal: 0.25rem !important;
+    --pico-font-size: 100%;
+}
+
+code {
+    outline: 1px solid var(--pico-primary);
+    border-radius: 3px;
+    padding: 0 5px;
+}
+
+p, h1,h2,h3,h4,h5,h6,a,blockquote,ul,ol {
+    &:not([contenteditable="true"]) {
+        background: transparent;
+        transition: all 0.2s;
+    }
+}
+
+*[contenteditable="true"] {
+    transition: all 0.2s;
+    background: var(--pico-text-selection-color);
+    outline: 2px solid var(--pico-primary-border);
+    border-radius: 3px;
+}
+.toolbar {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 50vw;
+    translate: -50% calc(-100% - 10px);
+    transition: all 0.2s;
+
+    button.secondary {
+        pointer-events: none;
+    }
+}
+.add {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    height: 30px;
+    width: 30px;
+    background: var(--pico-primary);
+    color: white;
+    border-radius: 100%;
+    translate: 0 -30px;
+    cursor: pointer;
+}
+*:hover + .add {
+    opacity: 1;
+}

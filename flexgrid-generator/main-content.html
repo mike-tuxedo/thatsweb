@@ -1,0 +1,46 @@
+<h1>Flex Container Query CSS Generator</h1>
+
+<form class="fg-421 fg-gap20 fg-min200">
+    <label for="prefix">
+      FlexGrid Prefix
+      <input id="prefix" type="text" value="fg" />
+    </label>
+    <label for="schemes">
+      Flex Schemas
+      <input id="schemes" type="text" value="6321,5321,421,321,21" placeholder="6321,5321,421,321,21" />
+    </label>
+    <label for="gaps">
+      Gap Variants
+      <input id="gaps" type="text" value="5,10,15,20,30,40,60" placeholder="5,10,15,20,30,40,60,80,100" />
+    </label>
+    <label for="minw">
+      Min-Width Variants
+      <input id="minw" type="text" value="100,200,300,400" placeholder="100,150,200,250,300,350,400" />
+    </label>
+</form>
+
+<div>
+  <button onclick="generateCSS()">Generate CSS</button>
+  <button onclick="minifyEdited()">Minify Edited CSS</button>
+</div>
+
+<div class="fg-21 fg-gap20 fg-min400">
+  <div id="css-input">
+    <h2>Generated CSS (editable)</h2>
+    <div class="output-wrap">
+      <button class="copy-btn" onclick="copyToClipboard('output')">📋</button>
+      <textarea id="output" rows="30"></textarea>
+    </div>
+  </div>
+  <div id="css-input-styled">
+    <h2>Highlighted Preview</h2>
+    <pre><code id="highlighted" class="css"></code></pre>
+  </div>
+  <div id="css-output">
+    <h2>Minified CSS</h2>
+    <div class="output-wrap">
+      <button class="copy-btn" onclick="copyToClipboard('minified')">📋</button>
+      <textarea id="minified" rows="10" readonly></textarea>
+    </div>
+  </div>
+</div>

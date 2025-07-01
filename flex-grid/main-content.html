@@ -1,0 +1,155 @@
+<section class="content-sm">
+    <div class="text">
+        <h3>Ok, but what's the difficulty her?</h3>
+        <p>Just try to get all points in the list done at once, good luck ;-)</p>
+        <p>Just chocking, i will try to explain it. You can get most of the points easily with display grid,
+            but there is no chance to get items in a grid centered. For example think about a 3 columns grid
+            with 4 items. The fourth item will not center, there is no way with display grid, expect a really hacky
+            solution with nth-last-child, last-child and doubling the columns and so on.<br></p>
+        <p>So your best option is <b>flexbox</b>, but it's also hard to achieve all the points, without writing multiple
+            media-queries for different screen-widths over and over again.</p>
+        <h2>Other Questions you may ask ;-)</h2>
+        <h3>How did you do that?</h3>
+        <p>I created a formula with calc, that calculates the size of the items base on items min-width and
+            fg-gapwidth. Items number and gap width are css variables. These variables are set in multiple
+            container-queries, so that we can use it in every nested context, no matter how wide the parent element
+            is.</p>
+        <h3>Why did you do that?</h3>
+        <ul>
+            <li>
+                Because I wanted to solve that problem</li>
+            <li>
+                Because I like challenges like that</li>
+            <li>
+                Because I like build stuff with pure css</li>
+        </ul>
+        <h3>Why not using tailwind or similar?</h3>
+        <ul>
+            <li>
+                Because it's way to much overkill and would kill the pagespeed because of features we never use.</li>
+            <li>I
+                just needed to solve that one problem and this for less than 3kb gives me the best price-performance
+                ratio I can imagine.</li>
+        </ul>
+        <h3>Why not using sass?</h3>
+        <ul>
+            <li>I
+                wanted to build something anyone can use, without having to know how to implement sass in his own
+                workflow. It's just copy&amp;paste the file in your project and you are ready.</li>
+            <li>I
+                am also working on a fun project, it's a kind of minimal cms without a database, composer and so on. It
+                is something anyone can just copy&amp;paste on his server an just start using it. This also means the
+                cms just uses html, css and js for frontend, nothing else.</li>
+            <li>
+                SASS in the end compiles to css, so I would get no size benefits of it</li>
+        </ul>
+        <h2>Default Values</h2>
+        <p><b>Columnschemes:</b>&nbsp;fg-21, fg-321, fg-421, fg-5321, fg-6321</p>
+        <p><b>Gap:</b>&nbsp;fg-10, fg-20, fg-30, fg-40, fg-60</p>
+        <p><b>MinWidths:&nbsp;</b>fg-100, fg-200, fg-300, fg-400</p>
+        <p>You can always create your custom version with the <a href="/flexgrid-generator/">flexgrid-generator</a>.
+</section>
+
+<section class="resizeable">
+    <div class="text">
+        <h2>
+            Compare 2 TextImage elements with differen textlenght
+        </h2>
+        <h3>fg-21 fg-gap20 fg-min400</h3>
+    </div>
+    <div class="fg-21 fg-gap20 fg-min400 teaser">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <div class="text">
+            <h4>Unsere Visionasdfasdf</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc eget ultricies ultrices,
+                nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nunc eget ultricies
+                ultrices, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl.
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc eget ultricies ultrices,
+                nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor.
+            </p>
+        </div>
+    </div>
+
+    <h3>fg-21 fg-gap20 fg-min300</h3>
+    <div class="fg-21 fg-gap20 fg-min300 teaser">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <div class="text">
+            <h4>Unsere Visionasdfasdf</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc eget ultricies ultrices,
+                nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl. Nullam auctor, nunc eget ultricies
+                ultrices, nisl nisl aliquam nisl, eget aliquam nisl nisl sit amet nisl, nisl nisl aliquam nisl, eget
+                aliquam nisl nisl sit amet nisl.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="text">
+        <h2>All default schemes</h2>
+        <h3>fg-21 fg-gap60 fg-min200</h3>
+    </div>
+    <div class="fg-21 fg-gap10 fg-min200 resizeable">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+    </div>
+    <div class="text">
+        <h3>fg-321 fg-gap10 fg-min200</h3>
+    </div>
+    <div class="fg-321 fg-gap10 fg-min200 resizeable">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+    </div>
+    <div class="text">
+        <h3>fg-421 fg-gap10 fg-min200</h3>
+    </div>
+    <div class="fg-421 fg-gap10 fg-min200 resizeable">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+    </div>
+    <div class="text">
+        <h3>fg-5321 fg-gap10 fg-min200</h3>
+    </div>
+    <div class="fg-5321 fg-gap10 fg-min200 resizeable">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+    </div>
+
+    <div class="text"><h3>fg-6321 fg-gap10 fg-min200</h3></div>
+    <div class="fg-6321 fg-gap10 fg-min200 resizeable">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+        <img src="/media/dummy1.webp" width="300" height="200" alt="Unser Team" style="border-radius: 8px;"
+            loading="lazy">
+    </div>
+</section>

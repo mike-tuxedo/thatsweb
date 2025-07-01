@@ -1,0 +1,39 @@
+<IfModule mod_dir.c>
+  DirectorySlash Off
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^([^/]+)$ $1.html [L]
+</IfModule>
+
+# Cache-Control für Bilder setzen
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Setze Standard-Ablaufzeit
+  ExpiresDefault "access plus 1 month"
+  
+  # Spezifische Regeln für verschiedene Bildtypen
+  ExpiresByType image/jpg "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  # Cache-Control Header für alle Bilddateien
+  <FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  
+  <FilesMatch "\.(js|css)$">
+  	Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+</IfModule>

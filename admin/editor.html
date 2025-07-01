@@ -1,0 +1,767 @@
+<div class="admin" x-data="editor" class="pico">
+
+  <div id="editor" class="pico">
+    <button @click="$store.editor.save" x-bind:aria-busy="$store.editor.isLoading && true">Seite speichern</button>
+    <a href="/" target="_blank" role="button">Frontend</a>
+    <a href="/admin/logout.php" role="button">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-log-out-icon lucide-log-out">
+        <path d="m16 17 5-5-5-5" />
+        <path d="M21 12H9" />
+        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      </svg>
+    </a>
+  </div>
+
+  <div class="toolbar pico">
+    <div class="toolbar-tags" role="group">
+      <button @click="$store.editor.setElementTag('h1')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'H1'}">h1</button>
+      <button @click="$store.editor.setElementTag('h2')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'H2'}">h2</button>
+      <button @click="$store.editor.setElementTag('h3')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'H3'}">h3</button>
+      <button @click="$store.editor.setElementTag('h4')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'H4'}">h4</button>
+      <button @click="$store.editor.setElementTag('p')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'P'}">p</button>
+      <button @click="$store.editor.setElementTag('ul')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'UL'}"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 6l11 0" /><path d="M9 12l11 0" /><path d="M9 18l11 0" /><path d="M5 6l0 .01" /><path d="M5 12l0 .01" /><path d="M5 18l0 .01" /></svg></button>
+        <button @click="$store.editor.setElementTag('ol')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'OL'}"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-list-numbers"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 6h9" /><path d="M11 12h9" /><path d="M12 18h8" /><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4" /><path d="M6 10v-6l-2 2" /></svg></button>
+      <button @click="$store.editor.setElementTag('blockquote')"
+        x-bind:class="{ 'secondary': $store.editor.currentEditEl && $store.editor.currentEditEl.tagName === 'BLOCKQUOTE'}"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-blockquote"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15h15" /><path d="M21 19h-15" /><path d="M15 11h6" /><path d="M21 7h-6" /><path d="M9 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" /><path d="M3 9h1a1 1 0 1 1 -1 1v-2.5a2 2 0 0 1 2 -2" /></svg></button>
+    </div>
+
+    <div class="toolbar-marker" role="group">
+      <button @click="$store.editor.toggleFormat('bold')"
+        x-bind:class="{ 'secondary': $store.editor.isButtonActive('bold') }" data-format="bold"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-bold"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6z" /><path d="M13 12h1a3.5 3.5 0 0 1 0 7h-7v-7" /></svg></button>
+      <button @click="$store.editor.toggleFormat('italic')"
+        x-bind:class="{ 'secondary': $store.editor.isButtonActive('italic') }" data-format="italic"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-italic"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M11 5l6 0" /><path d="M7 19l6 0" /><path d="M14 5l-4 14" /></svg></button>
+      <button @click="$store.editor.toggleFormat('underline')"
+        x-bind:class="{ 'secondary': $store.editor.isButtonActive('underline') }"
+        data-format="underline"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-underline"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 5v5a5 5 0 0 0 10 0v-5" /><path d="M5 19h14" /></svg></button>
+      <button @click="$store.editor.toggleFormat('link')" data-format="link">
+        <svg x-show="!$store.editor.isButtonActive('link')"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-link"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l6 -6" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg>
+        <svg x-show="$store.editor.isButtonActive('link')" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-link-off"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 15l3 -3m2 -2l1 -1" /><path d="M11 6l.463 -.536a5 5 0 0 1 7.071 7.072l-.534 .464" /><path d="M3 3l18 18" /><path d="M13 18l-.397 .534a5.068 5.068 0 0 1 -7.127 0a4.972 4.972 0 0 1 0 -7.071l.524 -.463" /></svg>
+      </button>
+      <button @click="$store.editor.toggleFormat('code')"
+        x-bind:class="{ 'secondary': $store.editor.isButtonActive('code') }" data-format="code"><svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-code"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 8l-4 4l4 4" /><path d="M17 8l4 4l-4 4" /><path d="M14 4l-4 16" /></svg></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toolbar = document.querySelector('.toolbar');
+  setInterval(() => {
+    const sel = window.getSelection();
+  }, 2000);
+
+  document.addEventListener('alpine:init', () => {
+    Alpine.store('editor', {
+      isLoading: false,
+      currentClickedAdd: null,
+      currentEditEl: null,
+      activeButtons: [],
+
+      setElementTag(tag) {
+        this.currentEditEl = this.changeTag(this.currentEditEl, tag);
+        console.log(this.currentEditEl);
+        this.currentEditEl.setAttribute('contenteditable', 'true');
+        this.currentEditEl.focus();
+
+        if ((tag == 'ul' || tag == 'ol') && this.currentEditEl.textContent == "") {
+          let li = document.createElement('li');
+          this.currentEditEl.append(li);
+          li.focus();
+        } else {
+          this.currentEditEl.focus();
+        }
+
+        this.initEditor(this.currentEditEl);
+      },
+
+      initEditor(editor) {
+        editor.addEventListener('click', () => {
+          console.log('click')
+          document.querySelector('[contenteditable="true"]')?.removeAttribute('contenteditable');
+          editor.setAttribute('contenteditable', 'true');
+          editor.focus();
+          this.currentEditEl = editor;
+          toolbar.style.top = `${editor.offsetTop}px`;
+
+          this.updateButtonStates();
+        })
+
+        editor.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+          }
+          const selection = window.getSelection();
+          if (!selection.rangeCount) return;
+          const range = selection.getRangeAt(0);
+
+          let node = selection.anchorNode;
+          if (node.nodeType === Node.TEXT_NODE) {
+            node = node.parentElement;
+          }
+          const currentEl = node.closest('li') || this.currentEditEl;
+
+          // ENTER ohne Shift
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+
+            if (currentEl.tagName === 'LI') {
+              const li = currentEl;
+              const text = li.textContent.trim();
+
+              console.log(e.target, text);
+
+              if (text === '') {
+                // Leeres LI -> Outdent oder Liste beenden
+                const parentUl = li.closest('ul') || li.closest('ol');
+                const grandParentLi = parentUl ? parentUl.closest('li') : null;
+
+                li.remove(); // erst nach dem Zugriff auf parentUl & grandParentLi!
+
+                if (grandParentLi) {
+                  // In verschachtelter UL → gehe eine Ebene hoch
+                  const afterLi = document.createElement('li');
+                  afterLi.setAttribute('contenteditable', 'true');
+                  grandParentLi.insertAdjacentElement('afterend', afterLi);
+                  this.currentEditEl = afterLi;
+                  this.initEditor(afterLi);
+                  this.placeCursorAtStart(afterLi);
+                } else {
+                  // Oberste UL-Ebene → beende Liste, erstelle <p>
+                  const newP = document.createElement('p');
+                  newP.setAttribute('contenteditable', 'true');
+                  parentUl.insertAdjacentElement('afterend', newP);
+                  this.currentEditEl = newP;
+                  this.initEditor(newP);
+                  this.placeCursorAtStart(newP);
+                }
+
+                return;
+              }
+
+
+              // NICHT LEER: neues LI einfügen
+              const afterContent = range.cloneRange();
+              afterContent.setEndAfter(li.lastChild);
+              const fragment = afterContent.extractContents();
+
+              const newLi = document.createElement('li');
+              newLi.setAttribute('contenteditable', 'true');
+              newLi.appendChild(fragment);
+              li.insertAdjacentElement('afterend', newLi);
+
+              currentEl.removeAttribute('contenteditable');
+              this.currentEditEl = newLi;
+              this.initEditor(newLi);
+              this.placeCursorAtStart(newLi);
+              return;
+            }
+
+            // Andernfalls: normales Verhalten (z. B. <p>)
+            const afterContent = range.cloneRange();
+            afterContent.setEndAfter(currentEl.lastChild);
+            const fragment = afterContent.extractContents();
+
+            const newP = document.createElement('p');
+            newP.setAttribute('contenteditable', 'true');
+            newP.appendChild(fragment);
+
+            currentEl.insertAdjacentElement('afterend', newP);
+            currentEl.removeAttribute('contenteditable');
+            this.currentEditEl = newP;
+            this.initEditor(newP);
+            this.placeCursorAtStart(newP);
+          }
+
+          // TAB: Einzug erzeugen (Indent)
+          if (e.key === 'Tab' && currentEl.tagName === 'LI') {
+            e.preventDefault();
+
+            const li = currentEl;
+            let prev = li.previousElementSibling;
+            if (prev && prev.tagName === 'LI') {
+              let sublist = prev.querySelector('ul');
+              if (!sublist) {
+                sublist = document.createElement('ul');
+                prev.appendChild(sublist);
+              }
+              li.remove();
+              sublist.appendChild(li);
+            }
+          }
+
+          this.cleanUpHtml();
+          this.updateButtonStates();
+        });
+      },
+
+      placeCursorAtStart(el) {
+        const sel = window.getSelection();
+        const range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      },
+
+      loadEditors() {
+        const editors = document.querySelectorAll('main p, main a, main h1, main h2, main h3, main h4, main h5, main h6, main ul, main ol, main blockquote');
+        let currentEdit = null;
+        editors.forEach(editor => {
+          this.initEditor(editor);
+        })
+      },
+
+      getTagAncestor(node, tagName) {
+        while (node && node !== this.currentEditEl) {
+          if (
+            node.nodeType === Node.ELEMENT_NODE &&
+            node.nodeName.toLowerCase() === tagName.toLowerCase()
+          ) {
+            return node;
+          }
+          node = node.parentNode;
+        }
+        return null;
+      },
+
+      unwrap(element) {
+        const parent = element.parentNode;
+        while (element.firstChild) parent.insertBefore(element.firstChild, element);
+        parent.removeChild(element);
+      },
+
+      changeTag(element, newTag) {
+        console.log(newTag, element.tagName)
+        if (!element || newTag.toUpperCase() === element.tagName) return element;
+
+        // Hilfsfunktion
+        const isList = (el) => el && (el.tagName === 'UL' || el.tagName === 'OL');
+
+        const findTopEditableList = (el) => {
+          while (el && el !== document.body) {
+            if ((el.tagName === 'UL' || el.tagName === 'OL') && el.getAttribute('contenteditable') === 'true') {
+              return el;
+            }
+            el = el.parentElement;
+          }
+          return element;
+        };
+
+        // Falls Textknoten → hole Eltern
+        if (element.nodeType === Node.TEXT_NODE) {
+          element = element.parentElement;
+        }
+
+        // Richtiges UL finden
+        let topList = findTopEditableList(element);
+        if (!topList) return element;
+
+        const newElement = document.createElement(newTag);
+
+        // Attribute übernehmen
+        for (let i = 0; i < topList.attributes.length; i++) {
+          const attribute = topList.attributes[i];
+          newElement.setAttribute(attribute.name, attribute.value);
+        }
+
+        // Handle list conversions between ul and ol
+        if (isList(topList) && (newTag === 'ul' || newTag === 'ol')) {
+          // Create a new list element
+          const newElement = document.createElement(newTag);
+          
+          // Copy attributes
+          for (let i = 0; i < topList.attributes.length; i++) {
+            const attribute = topList.attributes[i];
+            newElement.setAttribute(attribute.name, attribute.value);
+          }
+
+          // Function to recursively process nested lists
+          function processNestedLists(node, parent) {
+            Array.from(node.childNodes).forEach(subnode => {
+              // Handle text nodes directly
+              if (subnode.nodeType === Node.TEXT_NODE) {
+                parent.appendChild(subnode.cloneNode(true));
+              }
+              // Handle list items
+              else if (subnode.tagName === 'LI') {
+                const newLi = document.createElement('LI');
+                // Copy attributes
+                for (let i = 0; i < subnode.attributes.length; i++) {
+                  const attribute = subnode.attributes[i];
+                  newLi.setAttribute(attribute.name, attribute.value);
+                }
+                // Process LI's children
+                processNestedLists(subnode, newLi);
+                parent.appendChild(newLi);
+              }
+              // Handle nested lists
+              else if (isList(subnode)) {
+                const newList = document.createElement(newTag);
+                // Copy attributes
+                for (let i = 0; i < subnode.attributes.length; i++) {
+                  const attribute = subnode.attributes[i];
+                  newList.setAttribute(attribute.name, attribute.value);
+                }
+                // Process list's children
+                processNestedLists(subnode, newList);
+                parent.appendChild(newList);
+              }
+              // Handle other elements
+              else if (subnode.nodeType === Node.ELEMENT_NODE) {
+                const newElement = subnode.cloneNode(false); // Clone without children
+                // Process children
+                processNestedLists(subnode, newElement);
+                parent.appendChild(newElement);
+              }
+            });
+          }
+
+          // Start processing from the top level
+          processNestedLists(topList, newElement);
+          
+          // Replace the original element with the new one
+          topList.parentNode.replaceChild(newElement, topList);
+          this.cleanUpHtml();
+          
+          return newElement;
+        }
+        // If converting from list to non-list
+        else if (isList(topList) && newTag !== 'UL' && newTag !== 'OL') {
+          const fragment = document.createDocumentFragment();
+
+          const extractLiContent = (node) => {
+            Array.from(node.children).forEach((child) => {
+              if (child.tagName === 'LI') {
+                Array.from(child.childNodes).forEach((subnode) => {
+                  if (isList(subnode)) {
+                    extractLiContent(subnode); // rekursiv
+                  } else {
+                    fragment.appendChild(subnode.cloneNode(true));
+                  }
+                });
+                fragment.appendChild(document.createElement('br'));
+              }
+            });
+          };
+
+          extractLiContent(topList);
+
+          // Remove last <br>
+          if (fragment.lastChild?.tagName === 'BR') {
+            fragment.removeChild(fragment.lastChild);
+          }
+
+          newElement.appendChild(fragment);
+        }
+        // If converting from non-list to list
+        else if ((newTag === 'ul' || newTag === 'ol') && !isList(topList)) {
+          // Create LI elements while preserving formatting
+          const fragment = document.createDocumentFragment();
+          let currentLi = null;
+          
+          // Process each node
+          Array.from(topList.childNodes).forEach(node => {
+            // Handle BR elements by creating new LI
+            if (node.tagName === 'BR') {
+              // If we have a current LI with content, add it to fragment
+              if (currentLi && currentLi.childNodes.length > 0) {
+                fragment.appendChild(currentLi);
+              }
+              // Create new LI for next content
+              currentLi = document.createElement('LI');
+            }
+            // For text nodes and formatted elements
+            else if (node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE) {
+              // If we don't have a current LI, create one
+              if (!currentLi) {
+                currentLi = document.createElement('LI');
+              }
+              // If current node has content, add it to current LI
+              if (node.textContent.trim() || node.nodeType === Node.ELEMENT_NODE) {
+                // Clone node with formatting
+                const clonedNode = node.cloneNode(true);
+                currentLi.appendChild(clonedNode);
+              }
+            }
+          });
+          
+          // Add last LI if it has content
+          if (currentLi && currentLi.childNodes.length > 0) {
+            fragment.appendChild(currentLi);
+          }
+          
+          // Append all LIs to the new list
+          newElement.appendChild(fragment);
+        } else {
+          // Standardinhalt übernehmen
+          newElement.innerHTML = topList.innerHTML;
+        }
+
+        // Ersetze ursprüngliches UL/OL oder Element
+        topList.parentNode.replaceChild(newElement, topList);
+        this.cleanUpHtml();
+
+        return newElement;
+      },
+
+      // NEU von Claude
+      toggleFormat(format) {
+        const selection = window.getSelection();
+        if (selection.rangeCount === 0) return;
+
+        const range = selection.getRangeAt(0);
+        if (range.collapsed) return; // Keine Selektion
+
+        // Prüfen ob bereits formatiert
+        const isFormatted = this.isSelectionFormatted(format);
+
+        if (isFormatted) {
+          this.removeFormat(format, range);
+        } else {
+          this.applyFormat(format, range);
+        }
+
+        this.updateButtonStates();
+      },
+
+      updateButtonStates() {
+        // Get the current selection
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+          const range = selection.getRangeAt(0);
+          const startContainer = range.startContainer;
+          let startElement = startContainer.nodeType === Node.TEXT_NODE
+            ? startContainer.parentElement
+            : startContainer;
+
+          // Clear existing active buttons
+          this.activeButtons = [];
+
+          // Initialize format tags object
+          const formatTags = {
+            bold: null,
+            italic: null,
+            underline: null,
+            link: null,
+            code: null
+          };
+
+          console.log('update state');
+          console.log('startElement', startElement);
+
+          // Check all parent elements for formatting
+          while (startElement && startElement !== this.currentEditEl) {
+            console.log(startElement);
+
+            if (!formatTags.bold && (startElement.tagName === 'B' || startElement.tagName === 'STRONG')) {
+              this.activeButtons.push('bold');
+              formatTags.bold = startElement;
+            }
+            if (!formatTags.italic && (startElement.tagName === 'I' || startElement.tagName === 'EM')) {
+              this.activeButtons.push('italic');
+              formatTags.italic = startElement;
+            }
+            if (!formatTags.underline && startElement.tagName === 'U') {
+              this.activeButtons.push('underline');
+              formatTags.underline = startElement;
+            }
+            console.log(startElement.tagName);
+            if (!formatTags.link && startElement.tagName === 'A') {
+              this.activeButtons.push('link');
+              formatTags.link = startElement;
+            }
+            if (!formatTags.code && startElement.tagName === 'CODE') {
+              this.activeButtons.push('code');
+              formatTags.code = startElement;
+            }
+            startElement = startElement.parentElement;
+          }
+        }
+      },
+
+      // Add a method to check if a button should be active
+      isButtonActive(format) {
+        return this.activeButtons.includes(format);
+      },
+
+      // Add a method to get the active button states
+      getActiveButtons() {
+        return this.activeButtons;
+      },
+
+      isSelectionFormatted(format) {
+        const selection = window.getSelection();
+        if (selection.rangeCount === 0) return false;
+
+        const range = selection.getRangeAt(0);
+        const container = range.commonAncestorContainer;
+
+        // Prüfe ob der Container oder ein Parent das entsprechende Tag hat
+        let element = container.nodeType === Node.TEXT_NODE ? container.parentNode : container;
+
+        while (element && element !== this.editor) {
+          const tagName = element.tagName ? element.tagName.toLowerCase() : '';
+
+          if ((format === 'bold' && (tagName === 'b' || tagName === 'strong')) ||
+            (format === 'italic' && (tagName === 'i' || tagName === 'em')) ||
+            (format === 'underline' && tagName === 'u') || (format === 'code' && tagName === 'code') ||
+            (format === 'link' && tagName === 'a')) {
+            return true;
+          }
+
+          element = element.parentNode;
+        }
+
+        return false;
+      },
+
+      applyFormat(format, range) {
+        const selectedContent = range.extractContents();
+
+        const wrapper = document.createElement(this.getTagName(format));
+
+        if (format === 'link') {
+          const url = prompt("Link-URL eingeben:", "https://");
+          // If only "https://" is entered, restore original content
+          if (url === "https://") {
+            range.insertNode(selectedContent);
+            return;
+          }
+          wrapper.href = url;
+          wrapper.target = "_blank";
+        }
+
+        wrapper.appendChild(selectedContent);
+        range.insertNode(wrapper);
+
+
+
+        // Selektion auf das neue Element setzen
+        const newRange = document.createRange();
+        newRange.selectNodeContents(wrapper);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+
+        this.cleanUpHtml();
+      },
+
+      removeFormat(format, range) {
+        const selection = window.getSelection();
+        const selectedText = selection.toString();
+
+        // Finde das formatierte Parent-Element
+        let element = range.commonAncestorContainer;
+        if (element.nodeType === Node.TEXT_NODE) {
+          element = element.parentNode;
+        }
+
+        const tagName = this.getTagName(format);
+
+        while (element && element !== this.editor) {
+          if (element.tagName && element.tagName.toLowerCase() === tagName.toLowerCase()) {
+            const fullText = element.textContent;
+            const selectedTextStart = fullText.indexOf(selectedText);
+
+            if (selectedTextStart !== -1) {
+              const beforeText = fullText.substring(0, selectedTextStart);
+              const afterText = fullText.substring(selectedTextStart + selectedText.length);
+
+              const parent = element.parentNode;
+              const fragments = [];
+
+              // Sammle alle anderen Formatierungen aus dem Element
+              const otherFormats = this.getOtherFormats(element, format);
+
+              // Teil vor der Selektion (bleibt formatiert)
+              if (beforeText) {
+                const beforeElement = this.createFormattedElement(tagName, beforeText, otherFormats);
+                fragments.push(beforeElement);
+              }
+
+              // Selektierter Teil (nur andere Formatierungen, ohne die zu entfernende)
+              const middleElement = this.createFormattedElement(null, selectedText, otherFormats);
+              fragments.push(middleElement);
+
+              // Teil nach der Selektion (bleibt formatiert)
+              if (afterText) {
+                const afterElement = this.createFormattedElement(tagName, afterText, otherFormats);
+                fragments.push(afterElement);
+              }
+
+              // Ersetze das ursprüngliche Element
+              fragments.forEach(fragment => {
+                parent.insertBefore(fragment, element);
+              });
+              parent.removeChild(element);
+
+              // Neue Selektion auf den mittleren Teil setzen
+              const newRange = document.createRange();
+              newRange.selectNodeContents(middleElement);
+              selection.removeAllRanges();
+              selection.addRange(newRange);
+            }
+            break;
+          }
+          element = element.parentNode;
+        }
+
+        this.cleanUpHtml();
+      },
+
+
+      cleanUpHtml() {
+        if (!this.currentEditEl) return;
+
+        // Define tags to clean up
+        const formattingTags = ['b', 'strong', 'i', 'em', 'u', 'a', 'code', 'span'];
+
+        // Remove empty tags
+        formattingTags.forEach(tag => {
+          const elements = this.currentEditEl.getElementsByTagName(tag);
+          for (let i = elements.length - 1; i >= 0; i--) {
+            const element = elements[i];
+
+            // Check if tag is empty
+            if (!element.textContent.trim()) {
+              element.remove();
+            }
+
+            // Remove default link with empty URL
+            if (element.tagName === 'A' && element.getAttribute('href') === 'https://') {
+              element.remove();
+            }
+          }
+        });
+
+        // Remove empty paragraphs
+        const paragraphs = this.currentEditEl.getElementsByTagName('p');
+        for (let i = paragraphs.length - 1; i >= 0; i--) {
+          const p = paragraphs[i];
+          if (!p.textContent.trim() && p.childNodes.length === 0) {
+            p.remove();
+          }
+        }
+      },
+
+      getOtherFormats(element, excludeFormat) {
+        const formats = [];
+        const excludeTag = this.getTagName(excludeFormat);
+
+        // Durchlaufe alle Kinder und sammle Formatierungen
+        const walker = document.createTreeWalker(
+          element,
+          NodeFilter.SHOW_ELEMENT,
+          null,
+          false
+        );
+
+        let node;
+        while (node = walker.nextNode()) {
+          const tagName = node.tagName.toLowerCase();
+          if (tagName !== excludeTag.toLowerCase() &&
+            (tagName === 'b' || tagName === 'strong' || tagName === 'i' || tagName === 'em' || tagName === 'u')) {
+            if (!formats.includes(tagName)) {
+              formats.push(tagName);
+            }
+          }
+        }
+
+        return formats;
+      },
+
+      createFormattedElement(mainFormat, text, otherFormats) {
+        let element;
+
+        if (mainFormat) {
+          element = document.createElement(mainFormat);
+        } else {
+          // Wenn kein Hauptformat, erstelle einen Container oder direkt Text
+          if (otherFormats.length === 0) {
+            return document.createTextNode(text);
+          }
+          element = document.createDocumentFragment();
+        }
+
+        // Verschachtele die anderen Formatierungen
+        let currentElement = element;
+        otherFormats.forEach(format => {
+          const formatElement = document.createElement(format);
+          currentElement.appendChild(formatElement);
+          currentElement = formatElement;
+        });
+
+        // Füge den Text hinzu
+        if (currentElement === element && mainFormat) {
+          element.textContent = text;
+        } else if (otherFormats.length > 0) {
+          currentElement.textContent = text;
+        } else {
+          currentElement.textContent = text;
+        }
+
+        // Wenn es ein DocumentFragment ist und nur ein Kind hat, gib das Kind zurück
+        if (element instanceof DocumentFragment && element.children.length === 1) {
+          return element.firstElementChild;
+        }
+
+        return element;
+      },
+
+      getTagName(format) {
+        switch (format) {
+          case 'bold': return 'b';
+          case 'italic': return 'i';
+          case 'underline': return 'u';
+          case 'link': return 'a';
+          case 'code': return 'code';
+          default: return 'span';
+        }
+      },
+
+      // Speicher
+      async save() {
+        this.isLoading = true;
+        //await savePage();
+        setTimeout(() => {
+          this.isLoading = false;
+        }, 300)
+      },
+    });
+
+    const checkForMain = setInterval(() => {
+      if (document.querySelector('main')) {
+        clearInterval(checkForMain);
+        Alpine.store('editor').loadEditors();
+      }
+    }, 500)
+  })
+</script>
+
+<style>
+  #editor {
+    position: fixed;
+    bottom: 50px;
+    left: 50px;
+    display: flex;
+    gap: 20px;
+    z-index: 1000;
+  }
+
+  [data-editable] {
+    outline: 2px dashed #00aaff;
+  }
+
+  img {
+    cursor: pointer;
+  }
+</style>
+</div>

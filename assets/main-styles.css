@@ -1,0 +1,133 @@
+main {
+    section {
+        margin-bottom: 20px;
+    }
+
+    pre code {
+        display: block;
+        padding: 1rem;
+        border: 1px solid var(--pico-primary);
+        max-height: 400px;
+        overflow: auto;
+    }
+
+    .teaser {
+        h4 {
+            margin-top: 0;
+        }
+        img {
+            height: 100%;
+        }
+    }
+
+    /* Remove top-margin to align with image. Classic example would be a headline top-margin*/
+    *[class*="flex-"] {
+        >*>*:first-child {
+            margin-top: 0;
+        }
+    }
+
+    .resizeable {
+        resize: horizontal;
+        overflow: auto;
+        border: 1px dotted #aaa;
+        position: relative;
+        max-width: 100%;
+        min-width: 180px;
+        padding-bottom: 30px;
+
+        &::after {
+            position: absolute;
+            content: '';
+            width: 20px;
+            height: 20px;
+            bottom: 0;
+            right: 0;
+            z-index: 1;
+            pointer-events: none;
+            background-color: #333;
+        }
+
+        .resizeable {
+            border: 1px dotted #666;
+            padding-bottom: 0;
+
+            &::after {
+                background-color: #666;
+            }
+        }
+    }
+}
+
+/* ANCHOR FlexGrid Generator */
+.flexgrid-generator main {
+    #highlighted,
+    #output,
+    #minified {
+        height: 400px;
+        padding: 20px;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #css-output {
+        min-width: 100%;
+    }
+
+    .output-wrap {
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    button.copy-btn {
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        cursor: pointer;
+        z-index: 1;
+        font-size: 20px;
+        padding: 10px;
+        border: none;
+        background-color: var(--pico-secondary);
+        box-shadow: -2px 2px 15px rgba(0, 0, 0, 0.2);
+    }
+}
+
+/* ANCHOR FlexGrid Examples Page */
+.flexgrid-examples main {
+    .teaser-boxes {
+        display: flex;
+        flex-direction: column;
+
+        img {
+            width: 100%;
+        }
+        p {
+            flex-grow: 1;
+        }
+    }
+    .icon-box {
+        text-align: center;
+        max-width: 120px;
+
+        img {
+            width: 60px;
+        }
+        p {
+            width: 100%;
+        }
+    }
+    .colored-boxes {
+        background-color: var(--pico-secondary);
+        aspect-ratio: 3/1;
+    }
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
