@@ -30,7 +30,6 @@
         // Alle Komponenten laden, wenn die Seite geladen ist
         document.addEventListener('DOMContentLoaded', async function () {
             const path = location.pathname !== '/' ? location.pathname : '/index';
-            const contentContainer = document.getElementById('content-container');
             await loadComponent(`${path}/top-content.html`, 'top-container');
             // Content verzögert einblenden, damit der Swiper nicht flackert
             await loadComponent(`${path}/main-content.html`, 'main-container');
