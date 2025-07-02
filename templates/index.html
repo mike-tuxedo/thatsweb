@@ -1,82 +1,99 @@
 <!DOCTYPE html>
 <html lang="de">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Meine Seite mit HTML-Komponenten</title>
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Seite mit HTML-Komponenten</title>
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="stylesheet" href="/assets/init-styles.css" />
+        <link rel="stylesheet" href="/assets/pico.lime.min.css" />
+        <script src="/assets/int-script.js"></script>
 
-    <link rel="stylesheet" href="/assets/init-styles.css">
-    <link rel='stylesheet' href='/assets/pico.lime.min.css'>
-    <script src="/assets/int-script.js"></script>
-
-    <script>
-        // Funktion zum Laden der HTML-Komponenten
-        async function loadComponent(url, containerId) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+        <script>
+            // Funktion zum Laden der HTML-Komponenten
+            async function loadComponent(url, containerId) {
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                    }
+                    const html = await response.text();
+                    document.getElementById(containerId).innerHTML += html;
+                } catch (error) {
+                    console.error(`Fehler beim Laden von ${url}:`, error);
+                    document.getElementById(
+                        containerId
+                    ).innerHTML = `<p>Fehler beim Laden der Komponente: ${url}</p>`;
                 }
-                const html = await response.text();
-                document.getElementById(containerId).innerHTML += html;
-            } catch (error) {
-                console.error(`Fehler beim Laden von ${url}:`, error);
-                document.getElementById(containerId).innerHTML = `<p>Fehler beim Laden der Komponente: ${url}</p>`;
             }
-        }
 
-        // Alle Komponenten laden, wenn die Seite geladen ist
-        document.addEventListener('DOMContentLoaded', async function () {
-            const path = location.pathname !== '/' ? location.pathname : '/index';
-            await loadComponent(`${path}/top-content.html`, 'top-container');
-            // Content verzögert einblenden, damit der Swiper nicht flackert
-            await loadComponent(`${path}/main-content.html`, 'main-container');
-            await loadComponent('/footer-content.html', 'footer-container');
-        });
-    </script>
+            let path = location.pathname !== "/" ? location.pathname : "/index";
+            // Alle Komponenten laden, wenn die Seite geladen ist
+            document.addEventListener("DOMContentLoaded", async function () {
+                await loadComponent(`${path}/top-content.html`, "top-container");
+                // Content verzögert einblenden, damit der Swiper nicht flackert
+                await loadComponent(`${path}/main-content.html`, "main-container");
+                await loadComponent("/footer-content.html", "footer-container");
+            });
+        </script>
 
-    <!-- Optional SWIPER -->
-    <script src="/assets/swiper-element-bundle.min.js" async></script>
-</head>
+        <!-- Optional SWIPER -->
+        <script src="/assets/swiper-element-bundle.min.js" async></script>
+    </head>
 
-<body>
-    <header id="header-container">
-        <div class="container content-full">
-            <div class="container content-md fg-21">
-                <img src="media/logo.jpg" width="302" height="65" style="max-width: 302px;" alt="Thats web logo"
-                    fetchpriority="high">
-                <nav class="fg-" style="flex-grow: 1; align-items: center; justify-content: flex-end;">
-                    <ul id="navitems-container">
-                        <li class="topnav-link active"><a href="/">Home</a></li>
-                        <li class="topnav-link"><a href="/templates">Templates</a></li>
-                        <li class="topnav-link"><a href="/about-me">About me</a></li>
-                        <li class="topnav-link"><a href="/flex-grid">FlexGrid</a></li>
-                        <li class="topnav-link"><a href="/flexgrid-generator">FlexGrid generator</a></li>
-                        <li class="topnav-link">
-                            <span tabindex="0">Examples</span>
-                            <ul>
-                                <li><a href="/examples/playground">Playground</a></li>
-                                <li><a href="/examples/example1">Example 1</a></li>
-                                <li><a href="/examples/example2">Example 2</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
+    <body>
+        <header id="header-container" style="height: 107px">
+            <div class="container content-full">
+                <div class="container content-md fg-21">
+                    <img
+                        src="media/logo.jpg"
+                        width="302"
+                        height="65"
+                        style="max-width: 302px"
+                        alt="Thats web logo"
+                        fetchpriority="high"
+                    />
+                    <nav
+                        class="fg-"
+                        style="flex-grow: 1; align-items: center; justify-content: flex-end"
+                    >
+                        <ul id="navitems-container">
+                            <li class="topnav-link active"><a href="/">Home</a></li>
+                            <li class="topnav-link"><a href="/templates">Templates</a></li>
+                            <li class="topnav-link"><a href="/iframes">IFrames</a></li>
+                            <li class="topnav-link"><a href="/about-me">About me</a></li>
+                            <li class="topnav-link"><a href="/flex-grid">FlexGrid</a></li>
+                            <li class="topnav-link">
+                                <a href="/flexgrid-generator">FlexGrid generator</a>
+                            </li>
+                            <li class="topnav-link">
+                                <span tabindex="0">Examples</span>
+                                <ul>
+                                    <li><a href="/examples/playground">Playground</a></li>
+                                    <li><a href="/examples/example1">Example 1</a></li>
+                                    <li><a href="/examples/example2">Example 2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <main id="content-container">
-        <div id="top-container" class="content-full"></div>
-        <div id="main-container" class="content-md"></div>
-    </main>
+        <main id="content-container">
+            <div id="top-container" class="content-full"></div>
+            <div id="main-container" class="content-md"></div>
+        </main>
 
-    <footer id="footer-container"></footer>
+        <footer id="footer-container"></footer>
 
-    <link rel="stylesheet" href="/assets/main-styles.css" media="print" onload="this.media='all'">
-    <script src="/assets/main-script.js" async></script>
-</body>
-
+        <link
+            rel="stylesheet"
+            href="/assets/main-styles.css"
+            media="print"
+            onload="this.media='all'"
+        />
+        <script src="/assets/main-script.js" async></script>
+    </body>
 </html>

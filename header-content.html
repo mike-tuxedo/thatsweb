@@ -1,15 +1,23 @@
 <div class="container content-full">
     <div class="container content-md fg-21">
-        <img src="media/logo.jpg" width="302" height="65" style="max-width: 302px;" alt="Thats web logo" fetchpriority="high">
+        <img src="media/logo.jpg" width="302" height="65" style="max-width: 302px;" alt="Thats web logo"
+            fetchpriority="high">
         <nav class="fg-" style="flex-grow: 1; align-items: center; justify-content: flex-end;">
-            <ul>
+            <ul id="navitems-container">
                 <li class="topnav-link active"><a href="/">Home</a></li>
                 <li class="topnav-link"><a href="/templates">Templates</a></li>
                 <li class="topnav-link"><a href="/about-me">About me</a></li>
                 <li class="topnav-link"><a href="/flex-grid">FlexGrid</a></li>
                 <li class="topnav-link"><a href="/flexgrid-generator">FlexGrid generator</a></li>
-                <li class="topnav-link"><a href="/flex-grid-examples">FlexGrid examples</a></li>
+                <li class="topnav-link">
+                    <span tabindex="0">Examples</span>
+                    <ul>
+                        <li><a href="/examples/playground">Playground</a></li>
+                        <li><a href="/examples/example1">Example 1</a></li>
+                        <li><a href="/examples/example2">Example 2</a></li>
+                    </ul>
+                </li>
             </ul>
-        </div>
+        </nav>
     </div>
 </div>
