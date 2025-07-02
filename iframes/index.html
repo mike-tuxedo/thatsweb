@@ -72,6 +72,9 @@
                     loading="eager"
                     onload="this.insertAdjacentHTML('afterend', (this.contentDocument.body||this.contentDocument).innerHTML);this.remove()"
                 ></iframe>
+                <noscript>
+                    <iframe src="/iframes/top-content.html"></iframe>
+                </noscript>
             </div>
             <div id="main-container" class="content-md">
                 <iframe
@@ -80,15 +83,20 @@
                     onload="this.insertAdjacentHTML('afterend', (this.contentDocument.body||this.contentDocument).innerHTML);this.remove()"
                     async
                 ></iframe>
+                <noscript>
+                    <iframe src="/iframes/main-content.html"></iframe>
+                </noscript>
             </div>
         </main>
         <footer id="footer-container">
             <iframe
                 src="/footer-content.html"
                 style="display: none"
-                loading="eager"
                 onload="this.insertAdjacentHTML('afterend', (this.contentDocument.body||this.contentDocument).innerHTML);this.remove()"
             ></iframe>
+            <noscript>
+                <iframe src="/iframes/footer-content.html"></iframe>
+            </noscript>
         </footer>
         <link
             rel="stylesheet"
