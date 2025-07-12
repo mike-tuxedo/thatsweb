@@ -31,8 +31,6 @@
         // Alle Komponenten laden, wenn die Seite geladen ist
         document.addEventListener('DOMContentLoaded', async function () {
             const path = location.pathname !== '/' ? location.pathname : '/index';
-            await loadComponent(`${path}/top-content.html`, 'top-container');
-            // Content verzögert einblenden, damit der Swiper nicht flackert
             await loadComponent(`${path}/main-content.html`, 'main-container');
             await loadComponent('/footer-content.html', 'footer-container');
             document.dispatchEvent(contentLoaded);
@@ -45,33 +43,24 @@
 
 <body>
     <header id="header-container">
-        <div class="container content-full">
-            <div class="container content-md fg-21">
-                <img src="media/logo.jpg" width="302" height="65" style="max-width: 302px;" alt="Thats web logo"
-                    fetchpriority="high">
-                <nav class="fg-" style="flex-grow: 1; align-items: center; justify-content: flex-end;">
-                    <ul id="navitems-container">
-                        <li class="topnav-link active"><a href="/">Home</a></li>
-<li class="topnav-link"><a href="/templates">Templates</a></li>
-<li class="topnav-link"><a href="/about-me">About me</a></li>
-<li class="topnav-link"><a href="/flex-grid">FlexGrid</a></li>
-<li class="topnav-link"><a href="/flexgrid-generator">FlexGrid generator</a></li>
-<li class="topnav-link">
-    <span tabindex="0">Examples</span>
-    <ul>
-        <li><a href="/examples/playground">Playground</a></li>
-        <li><a href="/examples/example1">Example 1</a></li>
-        <li><a href="/examples/example2">Example 2</a></li>
-    </ul>
-</li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
+		<?php include('header-content.html'); ?>
     </header>
 
     <main id="content-container">
-        <div id="top-container" class="content-full"></div>
+        <div id="top-container" class="content-full">
+			<?php
+			$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+			if ($path === '/') {
+				$fullPath = $_SERVER['DOCUMENT_ROOT'] . '/index/top-content.html';
+			} else {
+				$topContentPath = $path . '/top-content.html';
+				$fullPath = $_SERVER['DOCUMENT_ROOT'] . $topContentPath;
+			}
+			if (file_exists($fullPath)) {
+				include $fullPath;
+			}
+			?>
+		</div>
         <div id="main-container" class="content-md"></div>
     </main>
 

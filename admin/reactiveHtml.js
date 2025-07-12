@@ -210,18 +210,10 @@ class ReactiveStore {
     updateIfDirective(el, varName) {
         const show = !!this.rs[varName];
 
-        el.style.transition = 'all 0.4s ease';
-        el.style.overflow = 'hidden';
-        el.savedHeight = el.savedHeight ? el.savedHeight : el.clientHeight;
-        el.style.display = 'inline-block';
-
         if (show) {
-            el.style.height = el.savedHeight + 'px';
+            el.style.display = '';
         } else {
-            el.style.height = el.savedHeight + 'px';
-            setTimeout(() => {
-                el.style.height = '0px';
-            }, 0)
+            el.style.display = 'none';
         }
     }
 

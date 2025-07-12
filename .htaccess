@@ -5,8 +5,23 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # RewriteCond %{REQUEST_FILENAME} !-f
-  # RewriteRule ^([^/]+)$ $1.html [L]
+
+  RewriteCond %{REQUEST_URI} .*
+  RewriteRule ^ - [E=DEBUG_URI:%{REQUEST_URI}]
+  
+  # SSI für .html-Dateien aktivieren
+  AddType text/html .html
+  AddOutputFilter INCLUDES .html
+  Options +Includes
+  
+  # Ursprüngliche REQUEST_URI speichern
+  RewriteCond %{REQUEST_URI} .*
+  RewriteRule ^ - [E=ORIGINAL_URI:%{REQUEST_URI}]
+  
+  # Always use root index.html for non-existing files
+  RewriteCond %{REQUEST_FILENAME} !-f
+  #RewriteRule ^.*$ index.html [L]
+  RewriteRule ^.*$ index.php [L]
 
   # Wenn auf /ordner zugegriffen wird (ohne /), aber ein Verzeichnis existiert...
   RewriteCond %{REQUEST_FILENAME} -d
