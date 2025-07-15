@@ -21,6 +21,15 @@
                 }
                 const html = await response.text();
                 document.getElementById(containerId).innerHTML += html;
+                var scripts = new DOMParser().parseFromString(html, 'text/html').querySelectorAll("SCRIPT");
+                var i = 0;
+                var j = scripts.length;
+                while (i < j) {
+                    var newScript = document.createElement("SCRIPT");
+                    scripts[i].src ? newScript.src = scripts[i].src : newScript.innerHTML = scripts[i].innerHTML;
+                    document.head.appendChild(newScript);
+                    i++;
+                }
             } catch (error) {
                 console.error(`Fehler beim Laden von ${url}:`, error);
                 document.getElementById(containerId).innerHTML = `<p>Fehler beim Laden der Komponente: ${url}</p>`;
@@ -77,7 +86,7 @@
             }
             ?>
         </div>
-        <div id="main-container" class="content-md"></div>
+        <div id="main-container" class="content-full"></div>
     </main>
 
     <footer id="footer-container"></footer>

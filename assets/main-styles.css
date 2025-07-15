@@ -1,6 +1,6 @@
 main {
-    section {
-        margin-bottom: 20px;
+    .grid {
+        gap: 60px;
     }
 
     pre code {
@@ -15,6 +15,7 @@ main {
         h4 {
             margin-top: 0;
         }
+
         img {
             height: 100%;
         }
@@ -61,6 +62,7 @@ main {
 
 /* ANCHOR FlexGrid Generator */
 .flexgrid-generator main {
+
     #highlighted,
     #output,
     #minified {
@@ -103,10 +105,12 @@ main {
         img {
             width: 100%;
         }
+
         p {
             flex-grow: 1;
         }
     }
+
     .icon-box {
         text-align: center;
         max-width: 120px;
@@ -114,10 +118,12 @@ main {
         img {
             width: 60px;
         }
+
         p {
             width: 100%;
         }
     }
+
     .colored-boxes {
         background-color: var(--pico-secondary);
         aspect-ratio: 3/1;
