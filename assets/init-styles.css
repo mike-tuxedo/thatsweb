@@ -16,6 +16,12 @@ html body {
         color: var(--pico-primary);
     }
 
+    @media (max-width: 1300px) {
+        svg:has(#morphPath) {
+            filter: blur(20px);
+        }
+    }
+
     /** Defaults */
     #content-container {
         min-height: 100vh;
