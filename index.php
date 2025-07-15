@@ -51,6 +51,10 @@
 </head>
 
 <body>
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <path id="morphPath" class="morph-path" fill="currentColor"  d="M32.5,-65.4C38.7,-52.6,38.2,-37.2,40.9,-25.8C43.5,-14.5,49.4,-7.2,51.3,1.1C53.2,9.5,51.2,18.9,49.7,32.4C48.3,45.9,47.5,63.4,39.3,74.3C31.2,85.1,15.6,89.3,2.7,84.6C-10.2,79.9,-20.3,66.4,-26.8,54.5C-33.3,42.7,-36,32.5,-46.7,23.7C-57.4,14.9,-76,7.5,-79.4,-2C-82.9,-11.4,-71.1,-22.8,-60.5,-31.9C-50,-40.9,-40.6,-47.5,-30.7,-58.2C-20.8,-69,-10.4,-83.8,1.3,-86.2C13.1,-88.5,26.2,-78.3,32.5,-65.4Z"  transform="translate(100 100)" />
+    </svg>
+
 <div class="background">
    <span></span>
    <span></span>
@@ -92,6 +96,7 @@
     <footer id="footer-container"></footer>
 
     <link rel="stylesheet" href="/assets/main-styles.css" media="print" onload="this.media='all'">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flubber/0.4.2/flubber.min.js"></script>
     <script src="/assets/main-script.js" async></script>
 </body>
 

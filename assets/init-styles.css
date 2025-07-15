@@ -6,6 +6,15 @@
 }
 
 html body {
+    svg:has(#morphPath) {
+        position: fixed;
+        z-index: -1;
+        top: -5vw;
+        width: 100vw;
+        height: 130vh;
+        filter: blur(50px);
+        color: var(--pico-primary);
+    }
 
     /** Defaults */
     #content-container {
@@ -285,7 +294,8 @@ html body {
     left: 0;
     background: #241f31;
     overflow: hidden;
-    z-index: -1;
+    z-index: -2;
+    opacity: 0;
 }
 
 .background span {

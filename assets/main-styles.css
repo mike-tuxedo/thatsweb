@@ -3,6 +3,10 @@ main {
         gap: 60px;
     }
 
+    #main-container section:not(.bgdark, .bgprimary, .bgsecondary) {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
     pre code {
         display: block;
         padding: 1rem;
