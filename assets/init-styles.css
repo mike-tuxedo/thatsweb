@@ -178,6 +178,8 @@ html body {
                     left: 0;
                     top: 0;
                     border-radius: 0;
+                    margin-left: 0 !important;
+                    margin-right: 0 !important;
                     width: 100vw;
                     height: 100vh;
                     opacity: 0;
@@ -191,7 +193,7 @@ html body {
                         translate: 0 100px;
                         transition: 0s;
                         font-size: 1.8rem;
-                        height: 80px;
+                        height: 70px;
                     }
 
                     &.show {
